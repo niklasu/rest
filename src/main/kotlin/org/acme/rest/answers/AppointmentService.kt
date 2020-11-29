@@ -13,7 +13,7 @@ class AppointmentService {
 
     fun add(createAppointmentDto: CreateAppointmentDto): AppointmentDto {
         println("Sending out appointment requests to participants: ${createAppointmentDto.participantIds}")
-        val appointment = Appointment(createAppointmentDto.date, createAppointmentDto.participantIds, State.PENDING)
+        val appointment = Appointment(date = createAppointmentDto.date, participantIds = createAppointmentDto.participantIds, state = State.PENDING)
         appointmentRepository.add(appointment)
         return AppointmentDto(appointment.id, appointment.date, appointment.participantIds, appointment.state)
     }
@@ -56,7 +56,7 @@ class AppointmentService {
     fun getInvitesOfUser(participantId: Int): List<InviteDto> {
         val appointmentsWithUserInvolved = appointmentRepository.appointments
                 .filter { it.participantIds.contains(participantId) }
-        val map = appointmentsWithUserInvolved.map { it to it.answers[participantId] }.toMap() //<Appointment, CurrentAnswer>
+        val map = appointmentsWithUserInvolved.associate { it to it.answers[participantId] }
         val actionMap = map.map { InviteDto(it.key.date, getActionBasedOnCurrentAnswer(it.key.id, it.value, participantId)) } //Appointment -> List of AnserEnums (actions)
         return actionMap
     }

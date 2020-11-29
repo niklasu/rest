@@ -20,18 +20,21 @@ export default class Profile extends Component {
                 <ul>
                     {this.state.invites.map(invite => {
                         return <Fragment>
-                            <a>{invite.date}</a>
-                            {invite.actions.map(action => {
-                                return <button onClick={() => {
-                                    fetch(new Request(action.url, {
-                                        method: action.method,
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: action.body
-                                    }))
-                                }}>{action.name}</button>
-                            })}
+                            <li>
+                                <a>{invite.date}</a>
+                                {invite.actions.map(action => {
+                                    return <button onClick={() => {
+                                        fetch(new Request(action.url, {
+                                            method: action.method,
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: action.body
+                                        })).then(() => this.componentDidMount())
+
+                                    }}>{action.name}</button>
+                                })}
+                            </li>
                         </Fragment>;
                     })}
                 </ul>
