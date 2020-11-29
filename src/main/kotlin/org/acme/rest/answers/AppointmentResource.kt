@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 
-@Path("/appointments")
+@Path("/api/appointments")
 class AppointmentResource {
 
     @Inject
@@ -20,14 +20,14 @@ class AppointmentResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    fun getAll() : List<AppointmentDto>{
+    fun getAll(): List<AppointmentDto> {
         return service.getAll()
     }
 
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    fun getOne(@PathParam("id") id: Int) : AppointmentDto {
+    fun getOne(@PathParam("id") id: Int): AppointmentDto {
         return service.getById(id)
     }
 
@@ -35,5 +35,11 @@ class AppointmentResource {
     @Path("/{id}/answers")
     fun answer(@PathParam("id") id: Int, answer: AnswerDto) {
         service.answer(id, answer)
+    }
+
+    @DELETE
+    @Path("/{id}")
+    fun delete(@PathParam("id") id: Int) {
+        service.delete(id)
     }
 }

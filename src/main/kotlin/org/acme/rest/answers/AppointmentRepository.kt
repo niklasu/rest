@@ -12,4 +12,8 @@ class AppointmentRepository {
     fun findById(id: Int): Appointment {
         return appointments.filter { a -> a.id == id }.first()
     }
+
+    fun delete(id: Int) {
+        appointments.removeIf { it.id == id }
+    }
 }

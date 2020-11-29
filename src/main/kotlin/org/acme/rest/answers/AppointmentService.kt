@@ -11,14 +11,14 @@ class AppointmentService {
     @field: Default
     lateinit var appointmentRepository: AppointmentRepository
 
-    fun add(createAppointmentDto: CreateAppointmentDto) : AppointmentDto {
+    fun add(createAppointmentDto: CreateAppointmentDto): AppointmentDto {
         println("Sending out appointment requests to participants: ${createAppointmentDto.participantIds}")
         val appointment = Appointment(createAppointmentDto.date, createAppointmentDto.participantIds, State.PENDING)
         appointmentRepository.add(appointment)
         return AppointmentDto(appointment.id, appointment.date, appointment.participantIds, appointment.state)
     }
 
-    fun getAll() : List<AppointmentDto>{
+    fun getAll(): List<AppointmentDto> {
         return appointmentRepository.appointments.map { a -> AppointmentDto(a.id, a.date, a.participantIds, a.state) }
     }
 
@@ -47,4 +47,31 @@ class AppointmentService {
         val found = appointmentRepository.findById(id)
         return AppointmentDto(found.id, found.date, found.participantIds, found.state)
     }
+
+    fun delete(id: Int) {
+        appointmentRepository.delete(id)
+    }
+
+    fun getInvitesOfUser(participantId: Int): List<InviteDto> {
+        val appointmentsWithUserInvolved = appointmentRepository.appointments
+                .filter { it.participantIds.contains(participantId) }
+        val map = appointmentsWithUserInvolved.map { it to it.answers[participantId] }.toMap() //<Appointment, CurrentAnswer>
+        val actionMap = map.map { InviteDto(it.key.date, getActionBasedOnCurrentAnswer(it.key.id, it.value, participantId)) } //Appointment -> List of AnserEnums (actions)
+        return actionMap
+    }
+
+    private fun getActionBasedOnCurrentAnswer(appointmentId: Int, value: AnswerEnum?, participantId: Int): List<Action> {
+        val acceptAction = Action(appointmentId, participantId, AnswerEnum.ACCEPTED)
+        val rejectAction = Action(appointmentId, participantId, AnswerEnum.REJECTED)
+        when (value) {
+            AnswerEnum.REJECTED -> {
+                return listOf(acceptAction)
+            }
+            AnswerEnum.ACCEPTED -> {
+                return listOf(rejectAction)
+            }
+        }
+        return listOf(acceptAction, rejectAction)
+    }
+
 }
