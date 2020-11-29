@@ -12,29 +12,32 @@ export default class Main extends Component {
 
     componentDidMount() {
         fetch(new Request('api/appointments'))
-            .then(r => r.json().then(r => this.setState({appointments: r.appointments, createAction: r.createAppointmentAction})))
+            .then(r => r.json().then(r => this.setState({
+                appointments: r.appointments,
+                createAction: r.createAppointmentAction
+            })))
     }
 
     render() {
-    console.log(this.state.createAction)
+        console.log(this.state.createAction)
         return (
             <Fragment>
-            {this.state.createAction?
-                            <button onClick={() => {
-                                let myRequest = new Request(this.state.createAction.url, {
-                                    method: this.state.createAction.method,
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: this.state.createAction.body
-                                });
-                                fetch(myRequest)
-                                    .then(r => r.json())
-                                    .then(x => this.setState({appointments: [...this.state.appointments, x]}))
-                            }}>{this.state.createAction.action}
-                            </button>
-            : null
-            }
+                {this.state.createAction ?
+                    <button onClick={() => {
+                        let myRequest = new Request(this.state.createAction.url, {
+                            method: this.state.createAction.method,
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: this.state.createAction.body
+                        });
+                        fetch(myRequest)
+                            .then(r => r.json())
+                            .then(x => this.setState({appointments: [...this.state.appointments, x]}))
+                    }}>{this.state.createAction.action}
+                    </button>
+                    : null
+                }
 
                 <ul>
                     {this.state.appointments.map((a) => {
