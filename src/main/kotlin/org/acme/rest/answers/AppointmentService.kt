@@ -18,8 +18,9 @@ class AppointmentService {
         return AppointmentDto(appointment.id, appointment.date, appointment.participantIds, appointment.state)
     }
 
-    fun getAll(): List<AppointmentDto> {
-        return appointmentRepository.appointments.map { a -> AppointmentDto(a.id, a.date, a.participantIds, a.state) }
+    fun getAll(): GetAllAppointments {
+        val appointments = appointmentRepository.appointments.map { a -> AppointmentDto(a.id, a.date, a.participantIds, a.state) }
+        return GetAllAppointments(appointments, CreateAppointmentAction())
     }
 
     fun answer(appointmentId: Int, answer: AnswerDto) {

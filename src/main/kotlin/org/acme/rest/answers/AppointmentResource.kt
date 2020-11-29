@@ -20,7 +20,7 @@ class AppointmentResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    fun getAll(): List<AppointmentDto> {
+    fun getAll(): GetAllAppointments {
         return service.getAll()
     }
 
