@@ -54,7 +54,14 @@ export default class Main extends Component {
                     <a>
                         <h3>Appointment Details</h3>
                         <p>State: {this.state.selected.state}</p>
-                        <p>Participants: {this.state.selected.participantIds}</p>
+                        <p>Participants: {}</p>
+                        <ul>
+                            {this.state.selected.participantIds.map(id => <li onClick={() => {
+                                this.props.history.push({
+                                    pathname: "/users/" + id
+                                });
+                            }}>{id}</li>)}
+                        </ul>
                     </a> : null}
             </Fragment>
         );

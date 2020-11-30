@@ -4,19 +4,26 @@ export default class Profile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            invites: []
+            invites: [],
+            name: ""
         }
     }
 
     componentDidMount() {
-        fetch(new Request(`/api/users/${this.props.match.params.id}/invites`))
+        fetch(new Request(`/api/users/${this.props.match.params.id}`))
             .then(d => d.json())
-            .then(x => this.setState({invites: x}))
+            .then(x => {
+                this.setState({name: x.name})
+                fetch(new Request(x.inviteLink))
+                    .then(d => d.json())
+                    .then(x => this.setState({invites: x}))
+            })
     }
 
     render() {
         return (
             <Fragment>
+                <p>Name: {this.state.name}</p>
                 <ul>
                     {this.state.invites.map(invite => {
                         return <Fragment>

@@ -11,6 +11,8 @@ class AppointmentService {
     @field: Default
     lateinit var appointmentRepository: AppointmentRepository
 
+    val users = mapOf(1 to "Bernd", 2 to "Fred", 3 to "Anna")
+
     fun add(createAppointmentDto: CreateAppointmentDto): AppointmentDto {
         println("Sending out appointment requests to participants: ${createAppointmentDto.participantIds}")
         val appointment = Appointment(date = createAppointmentDto.date, participantIds = createAppointmentDto.participantIds, state = State.PENDING)
@@ -73,6 +75,10 @@ class AppointmentService {
             }
         }
         return listOf(acceptAction, rejectAction)
+    }
+
+    fun getUserById(id: Int): UserDto {
+        return UserDto(id, users[id])
     }
 
 }

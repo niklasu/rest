@@ -18,8 +18,15 @@ class UserResouce {
     @GET
     @Path("/{id}/invites")
     @Produces(MediaType.APPLICATION_JSON)
-    fun getOne(@PathParam("id") id: Int): List<InviteDto> {
+    fun getOneInvites(@PathParam("id") id: Int): List<InviteDto> {
         return service.getInvitesOfUser(id)
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    fun getOne(@PathParam("id") id: Int): UserDto {
+        return service.getUserById(id)
     }
 
 }
