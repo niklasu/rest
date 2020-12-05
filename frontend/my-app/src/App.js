@@ -4,8 +4,6 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import AppointmentOverview from "./Main";
 import Profile from "./Profile";
 
-const Example = () => <p>Example Komponente</p>;
-
 export default function App() {
     return (
         <Router>
