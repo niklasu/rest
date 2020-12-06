@@ -113,5 +113,4 @@ However, now, there are new things a client has to care about:
 
 To me, the most interesting thing about this approach is the reduced amount of duplication of business rules.
 Without HATEOAS, clients always have to implement things like *if the current state is X, show possible actions A and B*.
-*If the current state is Y, the possible actions are B and C* etc. In this approach, developers have to read more docs
-and the probability of bugs is higher due to the duplication of business rules.
+*If the current state is Y, the possible actions are B and C* etc.
