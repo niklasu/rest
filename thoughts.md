@@ -103,10 +103,15 @@ or related actions.
 From a client development point of view, a few things are different now:
 1. The client doesn't need to check what the *current* answer for an invitation is in order to find out what the possible 
   actions are. The field isn't even needed. Instead, the possible actions are already given. This means that business rules 
-  don't have to be duplicated into the client. 
+  don't have to be duplicated into the client.
 2. The client doesn't need to know how exactly an answer is submitted. Neither the URL nor the request body have to 
   be constructed. Both are already given.
    
 However, now, there are new things a client has to care about:
 - there is an *actions* field which is an array
 - every item in this array follows a structure (name, url, method, body)
+
+To me, the most interesting thing about this approach is the reduced amount of duplication of business rules.
+Without HATEOAS, clients always have to implement things like *if the current state is X, show possible actions A and B*.
+*If the current state is Y, the possible actions are B and C* etc. In this approach, developers have to read more docs
+and the probability of bugs is higher due to the duplication of business rules.
