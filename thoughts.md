@@ -106,3 +106,7 @@ From a client development point of view, a few things are different now:
   don't have to be duplicated into the client. 
 2. The client doesn't need to know how exactly an answer is submitted. Neither the URL nor the request body have to 
   be constructed. Both are already given.
+   
+However, now, there are new things a client has to care about:
+- there is an *actions* field which is an array
+- every item in this array follows a structure (name, url, method, body)
