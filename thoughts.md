@@ -102,7 +102,7 @@ or related actions.
 
 From a client development point of view, a few things are different now:
 1. The client doesn't need to check what the *current* answer for an invitation is in order to find out what the possible 
-  actions are. The field isn't even needed. Instead, only the *next* possible actions are given. This means that business rules 
+  actions are. The field isn't even needed. Instead, only the **next** possible actions are given. This means that business rules 
   don't have to be duplicated into the client.
 2. The client doesn't need to know how exactly an answer is submitted. Neither the URL nor the request body have to 
   be constructed. Both are already given.
